@@ -12,21 +12,13 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
-var (
-	GuildID  = flag.String("guild", "", "Test guild ID. If not passed - bot registers commands globally")
-	BotToken = flag.String("token", "", "Bot access token")
-)
+var GuildID = flag.String("guild", "", "Test guild ID. If not passed - bot registers commands globally")
 
 func init() { flag.Parse() }
 
 func main() {
 	discordSession := bot.Start()
 
-	discordSession.AddHandler(func(session *discordgo.Session, interaction *discordgo.InteractionCreate) {
-		if handler, ok := commands.Handlers[interaction.ApplicationCommandData().Name]; ok {
-			handler(session, interaction)
-		}
-	})
 	discordSession.AddHandler(func(session *discordgo.Session, interaction *discordgo.InteractionCreate) {
 		if handler, ok := commands.Handlers[interaction.ApplicationCommandData().Name]; ok {
 			handler(session, interaction)

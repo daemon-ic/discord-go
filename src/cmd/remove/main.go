@@ -9,10 +9,7 @@ import (
 
 func init() { flag.Parse() }
 
-var (
-	GuildID  = flag.String("guild", "", "Test guild ID. If not passed - bot registers commands globally")
-	BotToken = flag.String("token", "", "Bot access token")
-)
+var GuildID = flag.String("guild", "", "Test guild ID. If not passed - bot registers commands globally")
 
 func init() { flag.Parse() }
 
