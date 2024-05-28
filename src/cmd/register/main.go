@@ -12,8 +12,6 @@ import (
 
 var GuildID = flag.String("guild", "", "Test guild ID. If not passed - bot registers commands globally")
 
-func init() { flag.Parse() }
-
 func main() {
 	discordSession := bot.Start()
 

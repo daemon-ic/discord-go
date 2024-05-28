@@ -7,11 +7,7 @@ import (
 	"example/slash/src/pkg/bot"
 )
 
-func init() { flag.Parse() }
-
 var GuildID = flag.String("guild", "", "Test guild ID. If not passed - bot registers commands globally")
-
-func init() { flag.Parse() }
 
 func main() {
 	discordSession := bot.Start()

@@ -13,16 +13,19 @@ var List = []*discordgo.ApplicationCommand{
 		Name:        "basic-command",
 		Description: "Basic command",
 	},
+
 	{
 		Name:                     "permission-overview",
 		Description:              "Command for demonstration of default command permissions",
 		DefaultMemberPermissions: &DefaultMemberPermissions,
 		DMPermission:             &DmPermission,
 	},
+
 	{
 		Name:        "basic-command-with-files",
 		Description: "Basic command with files",
 	},
+
 	{
 		Name:        "localized-command",
 		Description: "Localized command. Description and name may vary depending on the Language setting",
@@ -62,6 +65,7 @@ var List = []*discordgo.ApplicationCommand{
 			},
 		},
 	},
+
 	{
 		Name:        "options",
 		Description: "Command for demonstrating options",
@@ -123,6 +127,7 @@ var List = []*discordgo.ApplicationCommand{
 			},
 		},
 	},
+
 	{
 		Name:        "subcommands",
 		Description: "Subcommands and command groups example",
@@ -160,6 +165,7 @@ var List = []*discordgo.ApplicationCommand{
 			},
 		},
 	},
+
 	{
 		Name:        "responses",
 		Description: "Interaction responses testing initiative",
@@ -182,6 +188,7 @@ var List = []*discordgo.ApplicationCommand{
 			},
 		},
 	},
+
 	{
 		Name:        "followups",
 		Description: "Followup messages",
