@@ -10,6 +10,10 @@ import (
 
 var List = []*discordgo.ApplicationCommand{
 	{
+		Name:        "register",
+		Description: "Register for a Gogachamon Account",
+	},
+	{
 		Name:        "basic-command",
 		Description: "Basic command",
 	},
