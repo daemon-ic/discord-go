@@ -12,6 +12,7 @@ func Options(s *discordgo.Session, i *discordgo.InteractionCreate) {
 
 	// Or convert the slice into a map
 	optionMap := make(map[string]*discordgo.ApplicationCommandInteractionDataOption, len(options))
+
 	for _, opt := range options {
 		optionMap[opt.Name] = opt
 	}

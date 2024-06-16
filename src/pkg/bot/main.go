@@ -24,3 +24,17 @@ func Start() *discordgo.Session {
 
 	return discordSession
 }
+
+func SendMsg(content string, s *discordgo.Session, i *discordgo.InteractionCreate) {
+	s.ChannelMessageSend(i.ChannelID, content)
+}
+
+func Send(content string, s *discordgo.Session, i *discordgo.InteractionCreate) {
+	// sends and interaction response which apperantly ends the interaction ?
+	s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
+		Type: discordgo.InteractionResponseChannelMessageWithSource,
+		Data: &discordgo.InteractionResponseData{
+			Content: content,
+		},
+	})
+}

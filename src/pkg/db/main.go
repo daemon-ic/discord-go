@@ -3,14 +3,13 @@ package db
 import (
 	"database/sql"
 	"fmt"
-	"os"
 )
 
 var (
-	host   = os.Getenv("POSTGRES_HOST")
-	port   = os.Getenv("POSTGRES_POST")
-	user   = os.Getenv("POSTGRES_USER")
-	dbname = os.Getenv("POSTGRES_DBNAME")
+	host   = "localhost"
+	port   = 5432
+	user   = "alvinsewram"
+	dbname = "mydb"
 )
 
 func Conn() (*sql.DB, error) {

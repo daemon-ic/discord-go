@@ -13,15 +13,17 @@ import (
 )
 
 var Handlers = map[string]func(s *discordgo.Session, i *discordgo.InteractionCreate){
-	"register":                 handlers.Register,
-	"basic-command":            handlers.BasicCommand,
-	"basic-command-with-files": handlers.BasicCommandWithFiles,
-	"localized-command":        handlers.LocalizedCommand,
-	"options":                  handlers.Options,
-	"permission-overview":      handlers.PermissionOverview,
-	"subcommands":              handlers.Subcommands,
-	"responses":                handlers.Responses,
-	"followups":                handlers.FollowUps,
+	"casino":   handlers.Casino,
+	"register": handlers.Register,
+	"mine":     handlers.Mine,
+	// "basic-command":            handlers.BasicCommand,
+	// "basic-command-with-files": handlers.BasicCommandWithFiles,
+	// "localized-command":        handlers.LocalizedCommand,
+	// "options":                  handlers.Options,
+	// "permission-overview":      handlers.PermissionOverview,
+	// "subcommands":              handlers.Subcommands,
+	// "responses":                handlers.Responses,
+	// "followups":                handlers.FollowUps,
 }
 
 var GuildID = flag.String("guild", "", "Test guild ID. If not passed - bot registers commands globally")
