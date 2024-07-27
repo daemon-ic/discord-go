@@ -16,7 +16,7 @@ func getBanners() shared.Banner_Struct {
 		Id:          uuid.New(),
 		Created_At:  time.Now(),
 		Name:        "PROTOTYPE",
-		Entities:    []string{"ENTITY_ID_1", "ENTITY_ID_2", "60211b35-27b6-4e85-91dc-555e94da8585"},
+		Entities:    []string{"8ac5e2d8-21b4-44b9-b0c4-b5f8cdc698db", "d87d15f3-1be9-4031-80bf-be48e44a309f", "0bf50b91-6213-42eb-b60b-6d84317cb61c"},
 		ImageUrl:    "",
 		Description: "This is a prototype of a banner used for testing purposes.",
 		Price:       1000,

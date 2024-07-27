@@ -13,9 +13,12 @@ import (
 )
 
 var Handlers = map[string]func(s *discordgo.Session, i *discordgo.InteractionCreate){
-	"casino":   handlers.Casino,
-	"register": handlers.Register,
-	"mine":     handlers.Mine,
+	"casino":      handlers.Casino,
+	"register":    handlers.Register,
+	"mine":        handlers.Mine,
+	"shop":        handlers.Shop,
+	"banner_next": handlers.NavigateShop,
+	"banner_prev": handlers.NavigateShop,
 	// "basic-command":            handlers.BasicCommand,
 	// "basic-command-with-files": handlers.BasicCommandWithFiles,
 	// "localized-command":        handlers.LocalizedCommand,
@@ -30,15 +33,22 @@ var GuildID = flag.String("guild", "", "Test guild ID. If not passed - bot regis
 
 func main() {
 	discordSession := bot.Start()
-
-	discordSession.AddHandler(func(session *discordgo.Session, interaction *discordgo.InteractionCreate) {
-		if handler, ok := Handlers[interaction.ApplicationCommandData().Name]; ok {
-			handler(session, interaction)
-		}
-	})
-
 	discordSession.AddHandler(func(session *discordgo.Session, ready *discordgo.Ready) {
 		log.Printf("Logged in as: %v#%v", session.State.User.Username, session.State.User.Discriminator)
+	})
+
+	discordSession.AddHandler(func(session *discordgo.Session, interaction *discordgo.InteractionCreate) {
+		if interaction.Type == discordgo.InteractionApplicationCommand {
+			if handler, ok := Handlers[interaction.ApplicationCommandData().Name]; ok {
+				handler(session, interaction)
+			}
+		}
+
+		if interaction.Type == discordgo.InteractionMessageComponent {
+			if handler, ok := Handlers[interaction.MessageComponentData().CustomID]; ok {
+				handler(session, interaction)
+			}
+		}
 	})
 
 	err := discordSession.Open()

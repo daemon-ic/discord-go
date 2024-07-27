@@ -182,6 +182,11 @@ func Casino(s *discordgo.Session, i *discordgo.InteractionCreate) {
 		return
 	}
 
+	if unverifiedWager <= 0 {
+		bot.Send("Invalid Wager for Player '"+i.Member.User.GlobalName+"'", s, i)
+		return
+	}
+
 	wager := math.Min(float64(unverifiedWager), float64(profile.Balance))
 	log.Println("wager:", wager)
 
@@ -202,4 +207,11 @@ func Casino(s *discordgo.Session, i *discordgo.InteractionCreate) {
 	resultMsg := generateResultMsgs(profile.Discord_Global_Name, score, gameWon, immunity, gainWithBonus, newBalance)
 	bot.SendMsg(resultMsg, s, i)
 	bot.Send("✨ Game Complete\n", s, i)
+	bot.EditInteractionResp("fuck you", s, i)
+
+	// the results just didnt show the labels
+	// one of the field results was a memeory value, and thats because i didnt try to log an actual field
+	// apperantly if i try to log an object without hitting its field, the result will be a memory value.
+	// "%+v\n" will be the value, combined with the fmt library in order to tell me the field names which apperanly is important
+	// in order to use '%+v\n, i have to use fmt.Printf'
 }

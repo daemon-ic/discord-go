@@ -9,6 +9,18 @@ import (
 // of the command.
 
 var List = []*discordgo.ApplicationCommand{
+	// {
+	// 	Name:        "banner_next",
+	// 	Description: "Spend your Gold Bits here!",
+	// },
+	// {
+	// 	Name:        "banner_prev",
+	// 	Description: "Spend your Gold Bits here!",
+	// },
+	{
+		Name:        "shop",
+		Description: "Spend your Gold Bits here!",
+	},
 	{
 		Name:        "casino",
 		Description: "Try your luck at the Casino! Roll a 30 or higher to win!",

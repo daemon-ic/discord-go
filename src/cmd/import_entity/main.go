@@ -14,9 +14,9 @@ func getEntity() shared.Entity_Struct {
 	e := shared.Entity_Struct{
 		Id:         uuid.New(),
 		Created_At: time.Now(),
-		Name:       "batumaki",
+		Name:       "terabat",
 		ImageUrl:   "",
-		FlavorText: "",
+		FlavorText: "bat like creature that consumes electricity",
 		Power:      300,
 		Rarity:     10,
 		Prints:     0,

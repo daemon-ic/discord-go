@@ -47,6 +47,24 @@ type Created_Card_Struct struct {
 	Condition  string
 }
 
+// type Shop_Button struct {
+// 	Action string
+// 	Label  string
+// }
+
+type Shop_Display struct {
+	CurrentPage int
+	TotalPages  int
+	ItemName    string
+	ImageUrl    string
+	ItemPrice   int
+}
+
+// type Shop_Instance struct {
+// 	S *discordgo.Session
+// 	I *discordgo.InteractionCreate
+// }
+
 // type Mine_Reward struct {
 // 	Amount int
 // 	Level  string

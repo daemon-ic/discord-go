@@ -25,16 +25,38 @@ func Start() *discordgo.Session {
 	return discordSession
 }
 
+func EditMsg(msgId string, content string, s *discordgo.Session, i *discordgo.InteractionCreate) {
+	s.ChannelMessageEdit(i.ChannelID, msgId, content)
+}
+
 func SendMsg(content string, s *discordgo.Session, i *discordgo.InteractionCreate) {
 	s.ChannelMessageSend(i.ChannelID, content)
 }
 
-func Send(content string, s *discordgo.Session, i *discordgo.InteractionCreate) {
+func Send(content string, s *discordgo.Session, i *discordgo.InteractionCreate) *discordgo.InteractionResponse {
 	// sends and interaction response which apperantly ends the interaction ?
-	s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
+
+	// recieve the value of s and i, return value of interaction response... whcih is what i want right?
+
+	// interaction response is going to be the reference of the result of the function.
+
+	// im not sure why i am allowed to pass it as a result
+
+	interactionResp := &discordgo.InteractionResponse{
 		Type: discordgo.InteractionResponseChannelMessageWithSource,
 		Data: &discordgo.InteractionResponseData{
 			Content: content,
 		},
-	})
+	}
+
+	s.InteractionRespond(i.Interaction, interactionResp)
+	return interactionResp
+}
+
+func EditInteractionResp(content string, s *discordgo.Session, i *discordgo.InteractionCreate) {
+	newresp := &discordgo.WebhookEdit{
+		Content: &content,
+	}
+
+	s.InteractionResponseEdit(i.Interaction, newresp)
 }
