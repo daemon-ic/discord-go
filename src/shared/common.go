@@ -6,12 +6,14 @@ import (
 	"math/rand/v2"
 )
 
+var DiscordBaseUri = "https://discord.com/api/v10/"
+
 func PrettyLogJSON(value any) {
-	json, err := json.MarshalIndent(value, "", "    ")
+	formatted, err := json.MarshalIndent(value, "", "    ")
 	if err != nil {
 		fmt.Print("PrettyLogJSON Error")
 	}
-	fmt.Println(string(json))
+	fmt.Println(string(formatted))
 }
 
 func RandomNum(min, max int) int {

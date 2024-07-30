@@ -8,6 +8,7 @@ import (
 
 	"example/slash/src/pkg/bot"
 	"example/slash/src/pkg/handlers"
+	"example/slash/src/shared"
 
 	"github.com/bwmarrin/discordgo"
 )
@@ -38,6 +39,8 @@ func main() {
 	})
 
 	discordSession.AddHandler(func(session *discordgo.Session, interaction *discordgo.InteractionCreate) {
+		shared.PrettyLogJSON(interaction)
+
 		if interaction.Type == discordgo.InteractionApplicationCommand {
 			if handler, ok := Handlers[interaction.ApplicationCommandData().Name]; ok {
 				handler(session, interaction)

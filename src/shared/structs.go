@@ -3,8 +3,27 @@ package shared
 import (
 	"time"
 
+	"github.com/bwmarrin/discordgo"
 	"github.com/google/uuid"
 )
+
+type Interaction_Response_Json struct {
+	Type int                       `json:"type"`
+	Data Interaction_Callback_Data `json:"data"`
+}
+
+type Interaction_Callback_Data struct {
+	Content     string                     `json:"content"`
+	Components  discordgo.MessageComponent `json:"components"`
+	Attachments Attachment_Object          `json:"attachments"`
+}
+
+type Attachment_Object struct {
+	Id          string `json:"id"`
+	Filename    string `json:"filename"`
+	Url         string `json:"url"`
+	ContentType string `json:"content_type"`
+}
 
 type Profile_Struct struct {
 	Id                  uuid.UUID
