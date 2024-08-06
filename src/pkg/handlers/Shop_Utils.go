@@ -1,11 +1,13 @@
 package handlers
 
 import (
+	"bytes"
 	"database/sql"
-	"log"
-
 	"example/slash/src/pkg/profiles"
 	"example/slash/src/shared"
+	"io"
+	"log"
+	"net/http"
 
 	"github.com/bwmarrin/discordgo"
 )
@@ -19,6 +21,22 @@ type Shop_Instance struct {
 func (shop Shop_Instance) ValidatePlayer(ggmDB *sql.DB) (shared.Profile_Struct, error) {
 	log.Println("fetching player " + shop.I.Member.User.GlobalName)
 	return profiles.Find(ggmDB, shop.I.Member.User.ID)
+}
+
+func _getImageFromUrl(url string) []byte {
+	log.Println("fetching image :" + url)
+	resp, err := http.Get(url)
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		panic(err)
+	}
+
+	return body
 }
 
 func _generateDisplayContent(displayItems shared.Shop_Display) (*string, *[]discordgo.MessageComponent) {
@@ -51,11 +69,9 @@ func _generateDisplayContent(displayItems shared.Shop_Display) (*string, *[]disc
 	return Content, Components
 }
 
-func (shop Shop_Instance) FormatDataToDisplay(displayItems shared.Shop_Display) {
-}
-
 func (shop Shop_Instance) InitialDisplay(displayItems shared.Shop_Display) {
 	Content, Components := _generateDisplayContent(displayItems)
+	ImageFile := _getImageFromUrl(displayItems.ImageUrl)
 
 	interactionErr := shop.S.InteractionRespond(
 		shop.I.Interaction,
@@ -64,7 +80,13 @@ func (shop Shop_Instance) InitialDisplay(displayItems shared.Shop_Display) {
 			Data: &discordgo.InteractionResponseData{
 				Content:    *Content,
 				Components: *Components,
-				// Attachments: attachments,
+				Files: []*discordgo.File{
+					{
+						Name:        "test.png",
+						ContentType: "image/png",
+						Reader:      bytes.NewReader(ImageFile),
+					},
+				},
 			},
 		})
 	if interactionErr != nil {

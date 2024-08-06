@@ -13,7 +13,14 @@ import (
 // in the case of GET, the parameter queryParameters is transferred to the URL as query parameters
 // in the case of POST, the parameter body, an io.Reader, is used
 
-func Make[T any](fullUrl string, httpMethod string, headers map[string]string, queryParameters url.Values, body io.Reader, responseType T) (T, error) {
+func Make[T any](
+	fullUrl string,
+	httpMethod string,
+	headers map[string]string,
+	queryParameters url.Values,
+	body io.Reader,
+	responseType T) (T, error) {
+
 	client := http.Client{}
 	u, err := url.Parse(fullUrl)
 	if err != nil {

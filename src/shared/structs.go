@@ -7,16 +7,33 @@ import (
 	"github.com/google/uuid"
 )
 
+// responding = initial message ----
+type Interaction_Respond_Json struct {
+	Type int                      `json:"type"`
+	Data Interaction_Respond_Data `json:"components"`
+}
+
+type Interaction_Respond_Data struct {
+	Content    string                       `json:"content"`
+	Components []discordgo.MessageComponent `json:"components"`
+}
+
+// response = followup message ----
 type Interaction_Response_Json struct {
 	Type int                       `json:"type"`
 	Data Interaction_Callback_Data `json:"data"`
 }
 
 type Interaction_Callback_Data struct {
-	Content     string                     `json:"content"`
-	Components  discordgo.MessageComponent `json:"components"`
-	Attachments Attachment_Object          `json:"attachments"`
+	Content     string                       `json:"content"`
+	Components  []discordgo.MessageComponent `json:"components"`
+	Attachments Attachment_Object            `json:"attachments"`
 }
+
+//type Message_Component struct {
+//	Type       int                   `json:"type"`
+//	Components this.MessageComponent `json:"components"`
+//}
 
 type Attachment_Object struct {
 	Id          string `json:"id"`

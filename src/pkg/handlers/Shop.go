@@ -38,9 +38,17 @@ func Shop(session *discordgo.Session, interaction *discordgo.InteractionCreate) 
 		CurrentPage: 1,
 		TotalPages:  10,
 		ItemName:    "test 1",
-		ImageUrl:    "https://levelonegameshop.com/cdn/shop/products/d743a834353ab2c41a5358680a1270e6_720x.png",
+		ImageUrl:    "https://img.gamewith.net/article/thumbnail/rectangle/22360.png",
 		ItemPrice:   1000,
 	})
+
+	//shop.InitialDisplayNative(shared.Shop_Display{
+	//	CurrentPage: 1,
+	//	TotalPages:  10,
+	//	ItemName:    "test 1",
+	//	ImageUrl:    "https://levelonegameshop.com/cdn/shop/products/d743a834353ab2c41a5358680a1270e6_720x.png",
+	//	ItemPrice:   1000,
+	//})
 }
 
 func NavigateShop(session *discordgo.Session, interaction *discordgo.InteractionCreate) {
