@@ -94,6 +94,8 @@ type Shop_Display struct {
 	ItemName    string
 	ImageUrl    string
 	ItemPrice   int
+	PrevDisable bool
+	NextDisable bool
 }
 
 // type Shop_Instance struct {

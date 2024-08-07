@@ -20,14 +20,6 @@ var Handlers = map[string]func(s *discordgo.Session, i *discordgo.InteractionCre
 	"shop":        handlers.Shop,
 	"banner_next": handlers.NavigateShop,
 	"banner_prev": handlers.NavigateShop,
-	// "basic-command":            handlers.BasicCommand,
-	// "basic-command-with-files": handlers.BasicCommandWithFiles,
-	// "localized-command":        handlers.LocalizedCommand,
-	// "options":                  handlers.Options,
-	// "permission-overview":      handlers.PermissionOverview,
-	// "subcommands":              handlers.Subcommands,
-	// "responses":                handlers.Responses,
-	// "followups":                handlers.FollowUps,
 }
 
 var GuildID = flag.String("guild", "", "Test guild ID. If not passed - bot registers commands globally")

@@ -8,6 +8,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/bwmarrin/discordgo"
 )
@@ -30,17 +31,15 @@ func _getImageFromUrl(url string) []byte {
 		panic(err)
 	}
 	defer resp.Body.Close()
-
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		panic(err)
 	}
-
 	return body
 }
 
-func _generateDisplayContent(displayItems shared.Shop_Display) (*string, *[]discordgo.MessageComponent) {
-	Content := &displayItems.ItemName
+func _generateDisplayContent(displayItems shared.Shop_Display) (string, *[]discordgo.MessageComponent) {
+	Content := strconv.Itoa(displayItems.CurrentPage) + "/" + strconv.Itoa(displayItems.TotalPages)
 	Components := &[]discordgo.MessageComponent{
 		discordgo.ActionsRow{
 			Components: []discordgo.MessageComponent{
@@ -50,6 +49,7 @@ func _generateDisplayContent(displayItems shared.Shop_Display) (*string, *[]disc
 					},
 					CustomID: "banner_prev",
 					Style:    discordgo.SecondaryButton,
+					Disabled: displayItems.PrevDisable,
 				},
 				discordgo.Button{
 					Label:    "Buy!",
@@ -62,6 +62,7 @@ func _generateDisplayContent(displayItems shared.Shop_Display) (*string, *[]disc
 					},
 					CustomID: "banner_next",
 					Style:    discordgo.SecondaryButton,
+					Disabled: displayItems.NextDisable,
 				},
 			},
 		},
@@ -78,7 +79,7 @@ func (shop Shop_Instance) InitialDisplay(displayItems shared.Shop_Display) {
 		&discordgo.InteractionResponse{
 			Type: discordgo.InteractionResponseChannelMessageWithSource,
 			Data: &discordgo.InteractionResponseData{
-				Content:    *Content,
+				Content:    Content,
 				Components: *Components,
 				Files: []*discordgo.File{
 					{
@@ -96,14 +97,23 @@ func (shop Shop_Instance) InitialDisplay(displayItems shared.Shop_Display) {
 
 func (shop Shop_Instance) ChangeDisplay(displayItems shared.Shop_Display) {
 	Content, Components := _generateDisplayContent(displayItems)
+	ImageFile := _getImageFromUrl(displayItems.ImageUrl)
 
 	interactionErr := shop.S.InteractionRespond(
 		shop.I.Interaction,
 		&discordgo.InteractionResponse{
 			Type: discordgo.InteractionResponseUpdateMessage,
 			Data: &discordgo.InteractionResponseData{
-				Content:    *Content,
-				Components: *Components,
+				Content:     Content,
+				Components:  *Components,
+				Attachments: &[]*discordgo.MessageAttachment{}, // needed in v9 in below to override attachments
+				Files: []*discordgo.File{
+					{
+						Name:        "test.png",
+						ContentType: "image/png",
+						Reader:      bytes.NewReader(ImageFile),
+					},
+				},
 			},
 		})
 	if interactionErr != nil {

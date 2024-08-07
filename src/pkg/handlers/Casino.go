@@ -40,8 +40,6 @@ func getWager(i *discordgo.InteractionCreate) (int64, error) {
 	}
 }
 
-func confirmame() {}
-
 func roll(label string, s *discordgo.Session, i *discordgo.InteractionCreate) int {
 	result := shared.RollDice(20)
 	time.Sleep(500 * time.Millisecond)

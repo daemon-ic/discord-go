@@ -17,7 +17,7 @@ func getBanners() shared.Banner_Struct {
 		Created_At:  time.Now(),
 		Name:        "PROTOTYPE",
 		Entities:    []string{"8ac5e2d8-21b4-44b9-b0c4-b5f8cdc698db", "d87d15f3-1be9-4031-80bf-be48e44a309f", "0bf50b91-6213-42eb-b60b-6d84317cb61c"},
-		ImageUrl:    "",
+		ImageUrl:    "https://img.yugioh-card.com/en/wp-content/uploads/2021/07/BROL_550.png",
 		Description: "This is a prototype of a banner used for testing purposes.",
 		Price:       1000,
 	}

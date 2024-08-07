@@ -1,15 +1,32 @@
 package handlers
 
 import (
-	"log"
-
 	"example/slash/src/pkg/banners"
 	"example/slash/src/pkg/bot"
 	"example/slash/src/pkg/db"
 	"example/slash/src/shared"
+	"log"
+	"strconv"
+	"strings"
 
 	"github.com/bwmarrin/discordgo"
 )
+
+func getNewPageNum(shop Shop_Instance) int {
+	content := shop.I.Message.Content
+	pageNum, err := strconv.Atoi(strings.Split(content, "/")[0])
+	if err != nil {
+		log.Fatal(err)
+	}
+	customId := shop.I.MessageComponentData().CustomID
+	switch customId {
+	case "banner_next":
+		pageNum += 1
+	case "banner_prev":
+		pageNum -= 1
+	}
+	return pageNum
+}
 
 func Shop(session *discordgo.Session, interaction *discordgo.InteractionCreate) {
 	log.Println("init shop command")
@@ -34,21 +51,17 @@ func Shop(session *discordgo.Session, interaction *discordgo.InteractionCreate) 
 
 	shared.PrettyLogJSON(banners)
 
-	shop.InitialDisplay(shared.Shop_Display{
-		CurrentPage: 1,
-		TotalPages:  10,
-		ItemName:    "test 1",
-		ImageUrl:    "https://img.gamewith.net/article/thumbnail/rectangle/22360.png",
-		ItemPrice:   1000,
-	})
+	pageNum := 1
 
-	//shop.InitialDisplayNative(shared.Shop_Display{
-	//	CurrentPage: 1,
-	//	TotalPages:  10,
-	//	ItemName:    "test 1",
-	//	ImageUrl:    "https://levelonegameshop.com/cdn/shop/products/d743a834353ab2c41a5358680a1270e6_720x.png",
-	//	ItemPrice:   1000,
-	//})
+	shop.InitialDisplay(shared.Shop_Display{
+		CurrentPage: pageNum,
+		TotalPages:  len(banners),
+		ItemName:    banners[0].Name + "_banner",
+		ImageUrl:    banners[0].ImageUrl,
+		ItemPrice:   1000,
+		PrevDisable: true,
+		NextDisable: pageNum == len(banners),
+	})
 }
 
 func NavigateShop(session *discordgo.Session, interaction *discordgo.InteractionCreate) {
@@ -74,11 +87,15 @@ func NavigateShop(session *discordgo.Session, interaction *discordgo.Interaction
 
 	shared.PrettyLogJSON(banners)
 
+	pageNum := getNewPageNum(shop)
+
 	shop.ChangeDisplay(shared.Shop_Display{
-		CurrentPage: 5,
-		TotalPages:  10,
-		ItemName:    "test 2",
-		ImageUrl:    "https://levelonegameshop.com/cdn/shop/products/d743a834353ab2c41a5358680a1270e6_720x.png",
+		CurrentPage: pageNum,
+		TotalPages:  len(banners),
+		ItemName:    banners[pageNum-1].ImageUrl,
+		ImageUrl:    banners[pageNum-1].ImageUrl,
 		ItemPrice:   1000,
+		PrevDisable: pageNum == 1,
+		NextDisable: pageNum == len(banners),
 	})
 }
